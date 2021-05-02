@@ -1,5 +1,5 @@
-import {Flex, Image, Input, Icon} from "@chakra-ui/react"
-import {FaSearch} from "react-icons/fa"
+import {Flex, Image, Input, Icon, HStack, Box, Text, Avatar} from "@chakra-ui/react"
+import {FaSearch, FaBell, FaUserPlus} from "react-icons/fa"
 
 export const Header = ()=>{
   return (
@@ -12,7 +12,7 @@ export const Header = ()=>{
       mt="4"
       px="6"
       align="center"
-      border="1px"
+      border="2px"
       borderColor="yellow.500"
       
 
@@ -44,6 +44,34 @@ export const Header = ()=>{
            as={FaSearch}
           fontSize="20"
            />
+      </Flex>
+      <Flex 
+        align="center"
+        ml="auto"
+
+      >
+        <HStack 
+          spacing="8"
+          mx="8"
+          pr="8"
+          py="1"
+          color="gray.300"
+          borderRightWidth={1}
+          borderColor="gray.700"
+        >
+          <Icon as={FaUserPlus} fontSize="20"/>
+          <Icon as={FaBell} fontSize="20"/>
+        </HStack>
+        
+
+      <Flex align="center">
+        <Box mr="4" textAlign="right">
+          <Text>Maykon Sousa</Text>
+          <Text>maykon.sousa@hotmail.com</Text>
+        </Box>
+        <Avatar size="md" name="Maykon Sousa" src="https://avatars.githubusercontent.com/u/53588064?v=4"/>
+
+      </Flex>
       </Flex>
     </Flex>
   )
