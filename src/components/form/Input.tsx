@@ -1,6 +1,12 @@
-import {Input, FormControl} from "@chakra-ui/react"
+import {Input, FormControl, InputProps as NextInputProps} from "@chakra-ui/react"
 
-export const NextInput = ({name, placeholder, type})=>{
+interface InputProps extends NextInputProps {
+  name: string
+  placeholder:string;
+  type:string;
+}
+
+export const NextInput = ({name, placeholder, type, ...props}:InputProps)=>{
   return(
     <FormControl>
       <Input
@@ -10,6 +16,7 @@ export const NextInput = ({name, placeholder, type})=>{
         focusBorderColor="yellow.500"
         bgColor="gray.900"
         size="lg"
+        {...props}
     />
     </FormControl>
     
