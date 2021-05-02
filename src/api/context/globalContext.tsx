@@ -33,13 +33,14 @@ export const globalContext = createContext<InterfaceProps>({} as InterfaceProps)
 
 export const GlobalProvider = ({children}:PropsComponent)=>{
   const [users, setUsers] = useState<UserDataProps[] | AxiosResponse<UserDataProps[]> | []>([] )
+  const [totalPaginas, setTotalpaginas] = useState(null) 
   const [refreshLista, setRefreshLista] = useState(false)
 
   //carregar lista de usuários
   useEffect(()=>{
     api.get( "users").then(response=>{
       const myList = Array.isArray(response.data) && response.data.filter((item: UserDataProps)=>item.aplication==="NextControll")
-      console.log(response.data)
+      console.log(response)
       setUsers(myList)
     })
     
