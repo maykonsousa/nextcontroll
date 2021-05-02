@@ -38,7 +38,7 @@ export  const UserCard = ({name, email, avatar, ocupation, id}) => {
     })
   }
   return (
-    <Flex py={6} w="270px" border="1px"
+    <Flex py={6} w="270px" 
    
     >
       <Box

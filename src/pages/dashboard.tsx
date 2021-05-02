@@ -1,9 +1,9 @@
 import {Box, Flex, Text, HStack, Heading, SimpleGrid, Button, Icon, Link, Image} from '@chakra-ui/react'
-import { parse } from 'node:path';
 import { useContext } from 'react';
 import { FaUserPlus, FaTrash, FaUserEdit } from 'react-icons/fa';
 import { globalContext } from '../api/context/globalContext';
 import { Header } from '../components/Header'
+import { Pagination } from '../components/Pagination';
 import {UserCard} from '../components/UserCard'
 
 
@@ -42,6 +42,7 @@ import {UserCard} from '../components/UserCard'
          
         {Array.isArray(users) &&users.map(user=>(<UserCard id={parseInt(user.id)} key={user.id} name={user.name} email={user.email} avatar={user.avatar} ocupation={user.profession} />))}
         </SimpleGrid>
+        <Pagination/>
       </Box>
     </Flex>
 
