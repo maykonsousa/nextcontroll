@@ -1,10 +1,38 @@
 import Head from 'next/head'
-import {Flex, Button, Image, Link, Text} from '@chakra-ui/react'
-import { FormContainer } from '../components/form/FormContainer'
-import { NextInput  } from '../components/form/Input'
+import Router from 'next/router'
 
+import {Flex, Button, Image, Link, Text, Stack} from '@chakra-ui/react'
+import { NextInput  } from '../components/form/Input'
+import {useForm} from 'react-hook-form'
+import { api } from '../api/api'
+import { useContext } from 'react'
+import { globalContext } from '../api/context/globalContext'
+
+interface FormProps {
+  name:string;
+  email:string;
+  profession:string;
+  password:string;
+  confirmPassword: string;
+  aplication:"NextControll"
+
+}
 
    const  Cadastro=()=> {
+     const {handleSubmit, register, formState} = useForm();
+     const {errors} = formState
+     const {setLogeduser, setRefreshLista, refreshLista} = useContext(globalContext)
+
+     const registerNewUser = (values:FormProps)=>{
+       
+       api.post('users', {
+        name:values.name,
+        email:values.email,
+        profession:values.profession,
+        password:values.password,
+        aplication:"NextControll"
+       }).then(response=>setLogeduser(response.data)).then(()=>setRefreshLista(!refreshLista)).then(()=>Router.push('/dashboard'))
+     }
   return (
     <>
     <Head><title>Next Controll | Login</title></Head>
@@ -21,17 +49,36 @@ import { NextInput  } from '../components/form/Input'
        width={360}
        mb="8"
        /> 
-      <FormContainer stackSpacing="4">
-        <Text>faça o seu cadastro</Text>
-        <NextInput type="text" placeholder="Nome e Sobrenome" name="name"/> 
-        <NextInput type="text" placeholder="Profissão" name="profissão"/> 
-        <NextInput type="email" placeholder="E-mail" name="email"/> 
-        <NextInput type="password" placeholder="Senha"name="password"/> 
-        <NextInput type="password" placeholder="Confirme sua senha"name="password"/> 
-
+      <Flex 
+      as="form"
+      w="100%"
+      p="8"
+      maxWidth={360}
+      bg="gray.800"
+      align="center"
+      justify="center"
+      display="flex"
+      flexDirection="column"
+      borderRadius={8}
+      onSubmit={handleSubmit(registerNewUser)}
+      
+    >
+      <Stack spacing="4">
+        <NextInput type="text" placeholder="Nome e Sobrenome" name="name" {...register('name')} /> 
+        <NextInput type="text" placeholder="Profissão" name="profession" {...register('profession')} /> 
+        <NextInput type="email" placeholder="E-mail" name="email" {...register('email')}/> 
+        <NextInput type="password" placeholder="Senha"name="password" {...register('password')}/> 
+        <NextInput type="password" placeholder="Confirme sua senha"name="confirmPassword" {...register('confirmPassword')}/> 
         <Button colorScheme="yellow"size="lg"type="submit">Entrar</Button>
+
+      </Stack>
+ 
+        <Text>faça o seu cadastro</Text>
+       
+
+        
         <Link>Já tenho Cadstro</Link>
-      </FormContainer>
+        </Flex>
     </Flex>
     </>
     
