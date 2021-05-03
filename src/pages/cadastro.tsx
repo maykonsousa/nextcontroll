@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Router from 'next/router'
+import Link from 'next/link'
 
-import {Flex, Button, Image, Link, Text, Stack} from '@chakra-ui/react'
+import {Flex, Button, Image, Text, Stack, Heading} from '@chakra-ui/react'
 import { NextInput  } from '../components/form/Input'
 import {useForm} from 'react-hook-form'
 import { api } from '../api/api'
@@ -31,7 +32,7 @@ interface FormProps {
         profession:values.profession,
         password:values.password,
         aplication:"NextControll"
-       }).then(response=>setLogeduser(response.data)).then(()=>setRefreshLista(!refreshLista)).then(()=>Router.push('/dashboard'))
+       }).then(response=>setLogeduser(response.data)).then(()=>setRefreshLista(!refreshLista)).then(()=>Router.push('/'))
      }
   return (
     <>
@@ -63,6 +64,7 @@ interface FormProps {
       onSubmit={handleSubmit(registerNewUser)}
       
     >
+      <Heading fontSize="2xl" mb="4">faça o seu cadastro</Heading>
       <Stack spacing="4">
         <NextInput type="text" placeholder="Nome e Sobrenome" name="name" {...register('name')} /> 
         <NextInput type="text" placeholder="Profissão" name="profession" {...register('profession')} /> 
@@ -73,11 +75,11 @@ interface FormProps {
 
       </Stack>
  
-        <Text>faça o seu cadastro</Text>
+        
        
 
         
-        <Link>Já tenho Cadstro</Link>
+        <Link href="/">Já tenho Cadastro</Link>
         </Flex>
     </Flex>
     </>

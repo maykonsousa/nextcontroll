@@ -1,34 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <img src="./public/images/logo.png" height="100px" alt="Next Controll"/>
+</div>
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+  # Next Controll
+  Trata-se de uma aplicação que visa gerenciar os usuários de um possivel sistema.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+  ![](https://img.shields.io/badge/autor-Maykon%20Sousa-brightgreen)
+  ![](https://img.shields.io/badge/Language-Typescript-brightgreen)
+  ![](https://img.shields.io/badge/Front--End-ReactJS-brightgreen)
+  
+</div> 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Alguns recursos utilizados
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- **NextJS** — Framework do React que utiliza Nodejs para fornecer ao browser a pagina já renderizada (SSR) permitindo a indexação do ite em motores de busca e ainda deixa a aplicação mais performática quanto á carregamento e roteamento das páginas
+- **Context API** - Hook do React que nos permite compartilhar estados de forma global, deixando todas as informações disponíveis para ser acessada e atualizada em tempo real a partir de qualquer componente
+- **Chakra-UI** — Recurso de design que nos permite construir uma aplicação de forma declarativa (estrutura e estilização juntos) e possui uma biblioteca muito bacana de componentes estilizados
+- **SweetAlert** — Biblioteca para a construção de Alertas visuais estilizados
+- **React Hook Form** - Biblioteca para gerenciamento de estados de formulários  
+- **Axios** - Biblioteca para gerenciar o acesso às rotas da API
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Iniciando
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone este  reposítório usando `git clone https://github.com/maykonsousa/nextcontroll.git`
+2. acesse a pasta do projeto via terminal com o comando: `cd nextcontroll`<br />
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Iniciando a plataforma Web
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Utilize o comando  `yarn` ou `npm install` para instalar as dependências<br />
+3. Utilize o comando `yarn dev` para iniciar a aplicação no seu navegador
+
+## Logando na aplicação:
+A Api fornecida possui registros dinâmicos o que não permitiu manter um Login padrão, dessa forma, clique em registrar e faça o cadastro, logo será direcionado para a página de Login onde poderá acessar as informações com os dados cadastrados
+
+## Sobre do cadastro
+Um novo cadastro pode ser criado tanto pelo prório usuário na tela de registro quanto por outro usuário administrador no Dashboard com algumas ressalvas.
+
+Usuário cadastrado direto na página de registro, pode informar os dados de nome, email, profissão e senha.
+
+Já um usuário cadastrado por um outro usuário logado, deverá informar Nome, email e profissão. Quanto a senha, será salva automaticamente com a sequência numérica `12345678` que poderá ser alterada posteriormente pelo próprio usuário, quando este se logar na aplicação.
+
+## Edição de Usuários
+- Somente é permitido paraa usuários Logados
+- Usuários só podem alterar Nome e Profissão de outros usuários. Não podem Alterar dados de Login como email e senha
+- Usuários logados podem alterar os próprios dados inclusive email e senha
+
+## Exclusão de usuários
+- Usuários logados podem excluir outros usuários
+- Usuário Logado pode excluir a própria conta, nesse caso será redirecionado para a tela de login.
+
+## Atualização de Atividades
+
+[x] - Criação de telas  
+[ ] - Validação de formulários  
+[x] - Integração com a api  
+[x] - Login  
+[x] - Próprio Cadastro   
+[x] - Excluir usuários  
+[ ] - Alterar Usuarios  
+[ ] - Editar Perfil  
+[ ] - Excluir conta  
+[ ] - Alterar Senha  
+[ ] - Excluir a própria conta  
+[ ] - Criação de telas  
+
+## Prints das Telas
+
+
+
+
+***
+
+
+
+## CONTATOS
+**website**:[http://maykonsousa.github.io](http://maykonsousa.github.io/)  
+**LinkedIn**: [https://www.linkedin.com/in/maykonsousa](https://www.linkedin.com/in/maykonsousa/)  
+**Whatsapp**: 61 992943297
