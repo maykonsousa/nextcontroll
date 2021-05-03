@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {Flex, HStack, Icon} from '@chakra-ui/react'
-import { FaBell, FaUserEdit } from 'react-icons/fa'
+import { FaBell, FaSignOutAlt, FaUserEdit } from 'react-icons/fa'
+import { globalContext } from '../../api/context/globalContext'
+import Swal from 'sweetalert2'
+import Router from 'next/router'
+import { EditProfileModal } from '../Users/EditProfileModal'
 
 const IconsNotification = () => {
+  const {setLogeduser} = useContext(globalContext)
+
+  const signOut = ()=>{
+    Swal.fire({
+      title: 'Tem certeza que deseja sair da aplicação?',
+      showCancelButton: true,
+      confirmButtonText: `Sair`,
+      cancelButtonText:'Cancelar',
+    }).then((result) => {
+       if (result.isConfirmed) {
+        Swal.fire('Usuário Deslogado!', '', 'success').then(()=>setLogeduser({}))
+      } 
+    }).then(()=>Router.push('/'))
+  }
+
   return (
     <Flex 
         align="center"
@@ -18,8 +37,8 @@ const IconsNotification = () => {
           borderRightWidth={1}
           borderColor="gray.700"
         >
-          <Icon as={FaUserEdit} fontSize="20"/>
-          <Icon as={FaBell} fontSize="20"/>
+          <EditProfileModal/>
+          <Icon as={FaSignOutAlt} fontSize="20" cursor="pointer" onClick={()=>signOut()}/>
         </HStack>
         
       

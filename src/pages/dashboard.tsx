@@ -8,17 +8,17 @@ import { Pagination } from '../components/Pagination';
 import { useContext, useEffect } from 'react';
 import { globalContext } from '../api/context/globalContext';
 import { isEmpty } from '../common/utils/functions/isEmpty';
+import { EditModal } from '../components/Users/EditModal';
 
 
   const Dashboard = ()=>{
-    const {isOpen, onOpen, onClose} = useDisclosure()
     const {logedUser}  = useContext(globalContext)
 
 
      useEffect(()=>{
-        if(isEmpty(logedUser)){
-          Router.push('/')
-        }
+        // if(isEmpty(logedUser)){
+        //   Router.push('/')
+        // }
 
      },[logedUser])
    
@@ -34,21 +34,12 @@ import { isEmpty } from '../common/utils/functions/isEmpty';
       >
         <Flex mb="8" justify="space-between" align="center">
           <Heading size="lg" fontWeight="normal">Usuários</Heading>
-          <Button 
-            as="a"
-            colorScheme="yellow"
-            size="md"
-            fontSize="md"
-            leftIcon={<Icon as={FaUserPlus}/>}
-            onClick={onOpen}
-          >
-            
-              Criar Novo
-          </Button>
+          <NewUserModal/>
         </Flex>
         <UsersList/>
         <Pagination/>
-        <NewUserModal isOpen={isOpen} onClose={onClose} children   />
+       
+        
       </Box>
     </Flex>
 

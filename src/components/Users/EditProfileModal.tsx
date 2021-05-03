@@ -20,48 +20,40 @@ import {NextInput} from '../form/Input'
 import { api } from '../../api/api'
 import Swal from 'sweetalert2'
 import { globalContext } from '../../api/context/globalContext'
-import { FaUserPlus } from 'react-icons/fa'
+import { FaUserEdit, FaUserPlus } from 'react-icons/fa'
 
 
 interface ValuesProps{
   name:string;
   email:string;
   profession:string;
-  password:"12345678";
+  newPassword:string;
   aplication:"NextControll";
   
 }
 
-export const NewUserModal = ( ) => {
+export const EditProfileModal = ( ) => {
  const {handleSubmit, register } = useForm()
- const {refreshLista, setRefreshLista}= useContext(globalContext)
+ const {refreshLista, setRefreshLista, logedUser, setLogeduser}= useContext(globalContext)
 const {onClose, onOpen, isOpen} = useDisclosure()
+const {name, id, avatar, email, profession, password } =logedUser
 
  const createNewUser=(values:ValuesProps)=>{
-    api.post('users', {
+    api.put(`users/${id}`, {
       name:values.name,
       email:values.email,
       profession:values.profession,
-      password:"12345678",
+      password:values.newPassword,
       aplication:"NextControll",
     } )
     .then(()=>onClose())
-    .then(()=>Swal.fire('Usuário cadastrado com sucesso!','', 'success'))
+    .then(()=>Swal.fire('Perfil Atualizado!','', 'success'))
     .then(()=>setRefreshLista(!refreshLista))
+    
   }
   return (
     <>
-    <Button 
-            as="a"
-            colorScheme="yellow"
-            size="md"
-            fontSize="md"
-            leftIcon={<Icon as={FaUserPlus}/>}
-            onClick={onOpen}
-          >
-            
-              Criar Novo
-          </Button>
+    <Icon as={FaUserEdit} cursor="pointer" fontSize="20" onClick={onOpen} />
     
     <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay  />
@@ -88,9 +80,12 @@ const {onClose, onOpen, isOpen} = useDisclosure()
     >
           <ModalBody>
           <Stack spacing="4">
-              <NextInput name="name" type="text" placeholder="Nome e Sobrenome"  {...register('name')} />
-              <NextInput name="profession" type="text" placeholder="Profissão"  {...register('profession')} />
-              <NextInput name="email" type="text" placeholder="email"  {...register('email')} />
+              <NextInput name="name" type="text" placeholder="Nome e Sobrenome" defaultValue={name}  {...register('name')} />
+              <NextInput name="profession" type="text" placeholder="Profissão" defaultValue={profession} {...register('profession')} />
+              <NextInput name="email" type="email" placeholder="E-mail" defaultValue={email}  {...register('email')} />
+              <NextInput name="oldPassword" type="password" placeholder="Senha Atual"  {...register('oldPassword')} />
+              <NextInput name="newPassword" type="password" placeholder="Nova Senha"  {...register('newPassword')} />
+              <NextInput name="confirmNewPassword" type="password" placeholder="Repita a Nova Senha"  {...register('confirmNewPassword')} />
           </Stack>
           </ModalBody>
           <ModalFooter>

@@ -15,7 +15,7 @@ export const UsersList = () => {
          
         >
          
-        {Array.isArray(users) &&users.map(user=>(<UserCard id={parseInt(user.id)} key={user.id} name={user.name} email={user.email} avatar={user.avatar} ocupation={user.profession} />))}
+        {Array.isArray(users) &&users.map(user=>(<UserCard  id={user.id} key={user.id} name={user.name} email={user.email} avatar={user.avatar} profession={user.profession} />))}
       </SimpleGrid>
         
   )

@@ -64,12 +64,11 @@ Já um usuário cadastrado por um outro usuário logado, deverá informar Nome, 
 [x] - Login  
 [x] - Próprio Cadastro   
 [x] - Excluir usuários  
-[ ] - Alterar Usuarios  
+[x] - Alterar Usuarios  
 [ ] - Editar Perfil  
 [ ] - Excluir conta  
 [ ] - Alterar Senha  
 [ ] - Excluir a própria conta  
-[ ] - Criação de telas  
 
 ## Prints das Telas
 

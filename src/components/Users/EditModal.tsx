@@ -12,64 +12,63 @@ import {
   HStack,
   Flex,
   Stack,
-  useDisclosure,
-  Icon
+  useDisclosure
   
 } from "@chakra-ui/react"
 import {NextInput} from '../form/Input'
 import { api } from '../../api/api'
 import Swal from 'sweetalert2'
 import { globalContext } from '../../api/context/globalContext'
-import { FaUserPlus } from 'react-icons/fa'
 
 
 interface ValuesProps{
   name:string;
-  email:string;
   profession:string;
-  password:"12345678";
-  aplication:"NextControll";
+  id:string;
+  
   
 }
 
-export const NewUserModal = ( ) => {
+export const EditModal = ({name, profession, id}: ValuesProps ) => {
+  
  const {handleSubmit, register } = useForm()
  const {refreshLista, setRefreshLista}= useContext(globalContext)
-const {onClose, onOpen, isOpen} = useDisclosure()
+ const {isOpen, onClose, onOpen} = useDisclosure()
 
- const createNewUser=(values:ValuesProps)=>{
-    api.post('users', {
+
+
+
+
+ const editUser=(values:ValuesProps)=>{
+   console.log(values)
+    api.put(`users/${id}`, {
       name:values.name,
-      email:values.email,
       profession:values.profession,
-      password:"12345678",
-      aplication:"NextControll",
+     
     } )
     .then(()=>onClose())
-    .then(()=>Swal.fire('Usuário cadastrado com sucesso!','', 'success'))
+    .then(()=>Swal.fire('Dados Alterados com sucesso!','', 'success'))
     .then(()=>setRefreshLista(!refreshLista))
   }
   return (
     <>
-    <Button 
-            as="a"
-            colorScheme="yellow"
-            size="md"
-            fontSize="md"
-            leftIcon={<Icon as={FaUserPlus}/>}
+    <Button
+            w={'full'}
+           
+            bg= 'gray.900'
+            color={'white'}
+            rounded={'md'}
             onClick={onOpen}
-          >
-            
-              Criar Novo
+           >
+            Editar
           </Button>
-    
     <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay  />
         <ModalContent bg="gray.800">
-          <ModalHeader
+          <ModalHeader id="edit"
             color="gray.50"
           >
-            Cadastrar Novo Usuário
+            Editar Dados de Usuário
           </ModalHeader>
           <ModalCloseButton />
           
@@ -84,13 +83,13 @@ const {onClose, onOpen, isOpen} = useDisclosure()
             display="flex"
             flexDirection="column"
             borderRadius={8}
-            onSubmit={handleSubmit(createNewUser)}
+            onSubmit={handleSubmit(editUser)}
     >
           <ModalBody>
           <Stack spacing="4">
-              <NextInput name="name" type="text" placeholder="Nome e Sobrenome"  {...register('name')} />
-              <NextInput name="profession" type="text" placeholder="Profissão"  {...register('profession')} />
-              <NextInput name="email" type="text" placeholder="email"  {...register('email')} />
+              <NextInput name="name" type="text" placeholder="Nome e Sobrenome" defaultValue={name}  {...register('name')} />
+              <NextInput name="profession" type="text" placeholder="Profissão" defaultValue={profession}  {...register('profession')} />
+              
           </Stack>
           </ModalBody>
           <ModalFooter>

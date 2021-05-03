@@ -10,18 +10,21 @@ import {
   Button,
   
   Icon,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import {FaEnvelope} from 'react-icons/fa'
 import { globalContext } from '../api/context/globalContext';
 import {api} from '../api/api'
 import swal from 'sweetalert2'
+import { EditModal } from './Users/EditModal';
 
 
-export  const UserCard = ({name, email, avatar, ocupation, id}) => {
-  const {refreshLista, setRefreshLista} =useContext(globalContext)
+export  const UserCard = ({name, email, avatar, profession, id}) => {
+  const {refreshLista, setRefreshLista, setUserForEdit, users} =useContext(globalContext)
   
-  const deleteUser= (id:Number)=>{
+    
+  const deleteUser= (id:string)=>{
     swal.fire({
       title: `Deseja realmente excluir este usuário ?`,
       showDenyButton: true,
@@ -76,7 +79,7 @@ export  const UserCard = ({name, email, avatar, ocupation, id}) => {
             <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'} color="gray.900">
              {!!name && name}
             </Heading>
-            <Text color={'gray.500'}> {!!ocupation && ocupation} </Text>
+            <Text color={'gray.500'}> {!!profession && profession} </Text>
           </Stack>
 
           <Stack direction={'row'} justify={'center'} spacing={6}>
@@ -90,15 +93,7 @@ export  const UserCard = ({name, email, avatar, ocupation, id}) => {
           </Stack>
 
           <HStack spacing="4" mt="8">
-          <Button
-            w={'full'}
-           
-            bg= 'gray.900'
-            color={'white'}
-            rounded={'md'}
-           >
-            Editar
-          </Button>
+          <EditModal name={name} profession={profession} id={id} />
           <Button
             w={'full'}
             bg='red.500'
@@ -111,6 +106,8 @@ export  const UserCard = ({name, email, avatar, ocupation, id}) => {
           </HStack>
         </Box>
       </Box>
+     
+     
     </Flex>
   );
 }
