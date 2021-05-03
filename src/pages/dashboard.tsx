@@ -1,16 +1,22 @@
-import {Box, Flex, Heading, SimpleGrid, Button, Icon, useDisclosure, } from '@chakra-ui/react'
-import { useContext } from 'react';
+import {Box, Flex, Heading, Button, Icon, useDisclosure, } from '@chakra-ui/react'
+import Router from 'next/router'
 import { FaUserPlus} from 'react-icons/fa';
-import { globalContext } from '../api/context/globalContext';
-import { NewUserModal } from '../components/NewUserModal';
+import { NewUserModal } from '../components/Users/NewUserModal';
 import { Header } from '../components/Header/Index'
+import { UsersList } from '../components/Users/usersList';
 import { Pagination } from '../components/Pagination';
-import {UserCard} from '../components/UserCard'
+import { useContext } from 'react';
+import { globalContext } from '../api/context/globalContext';
+import { isEmpty } from '../common/utils/functions/isEmpty';
 
 
   const Dashboard = ()=>{
-    const {users} = useContext(globalContext)
     const {isOpen, onOpen, onClose} = useDisclosure()
+    const {logedUser}  = useContext(globalContext)
+
+   if(isEmpty(logedUser)){
+     ()=>Router.push('/')
+   }
   return(
     <Flex direction="column" h="100vh">
     <Header/>
@@ -35,16 +41,7 @@ import {UserCard} from '../components/UserCard'
               Criar Novo
           </Button>
         </Flex>
-        <SimpleGrid
-          spacing={2}
-          minChildWidth="320px"
-          column="auto"
-          alignItems=""
-         
-        >
-         
-        {Array.isArray(users) &&users.map(user=>(<UserCard id={parseInt(user.id)} key={user.id} name={user.name} email={user.email} avatar={user.avatar} ocupation={user.profession} />))}
-        </SimpleGrid>
+        <UsersList/>
         <Pagination/>
         <NewUserModal isOpen={isOpen} onClose={onClose} children   />
       </Box>

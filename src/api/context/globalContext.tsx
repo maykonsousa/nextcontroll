@@ -20,6 +20,8 @@ interface UserDataProps {
 
 interface InterfaceProps {
   users?: UserDataProps[];
+  logedUser: UserDataProps
+  setLogeduser: React.Dispatch<SetStateAction<UserDataProps>>;
   setUsers?: React.Dispatch<SetStateAction<UserDataProps[]>>;
   refreshLista: Boolean;
   setRefreshLista:React.Dispatch<SetStateAction<Boolean>>
@@ -33,6 +35,7 @@ export const globalContext = createContext<InterfaceProps>({} as InterfaceProps)
 
 export const GlobalProvider = ({children}:PropsComponent)=>{
   const [users, setUsers] = useState<UserDataProps[] | AxiosResponse<UserDataProps[]> | []>([] )
+  const [logedUser, setLogeduser]=useState<UserDataProps>({} as UserDataProps)
   const [totalPaginas, setTotalpaginas] = useState(null) 
   const [refreshLista, setRefreshLista] = useState(false)
 
@@ -40,17 +43,18 @@ export const GlobalProvider = ({children}:PropsComponent)=>{
   useEffect(()=>{
     api.get( "users").then(response=>{
       const myList = Array.isArray(response.data) && response.data.filter((item: UserDataProps)=>item.aplication==="NextControll")
-      console.log(response)
       setUsers(myList)
     })
     
   },[refreshLista])
 
+  
+
  
 
 
   return(
-    <globalContext.Provider value={{ users, setUsers, refreshLista, setRefreshLista} as InterfaceProps}>
+    <globalContext.Provider value={{ users, setUsers, refreshLista, setRefreshLista, logedUser, setLogeduser } as InterfaceProps}>
       {children}
     </globalContext.Provider>
   )
