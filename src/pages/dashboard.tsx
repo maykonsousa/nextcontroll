@@ -3,9 +3,9 @@ import Router from 'next/router'
 import { FaUserPlus} from 'react-icons/fa';
 import { NewUserModal } from '../components/Users/NewUserModal';
 import { Header } from '../components/Header/Index'
-import { UsersList } from '../components/Users/usersList';
+import { UsersList } from '../components/Users/UsersList';
 import { Pagination } from '../components/Pagination';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { globalContext } from '../api/context/globalContext';
 import { isEmpty } from '../common/utils/functions/isEmpty';
 
@@ -14,9 +14,14 @@ import { isEmpty } from '../common/utils/functions/isEmpty';
     const {isOpen, onOpen, onClose} = useDisclosure()
     const {logedUser}  = useContext(globalContext)
 
-   if(isEmpty(logedUser)){
-     ()=>Router.push('/')
-   }
+
+     useEffect(()=>{
+        if(isEmpty(logedUser)){
+          Router.push('/')
+        }
+
+     },[logedUser])
+   
   return(
     <Flex direction="column" h="100vh">
     <Header/>
