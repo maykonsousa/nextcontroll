@@ -64,6 +64,7 @@ export  const UserCard = ({name, email, avatar, ocupation, id}) => {
             size={'xl'}
             src={ !!avatar && avatar }
             alt={'Author'}
+            name={name}
             css={{
               border: '2px solid white',
             }}
