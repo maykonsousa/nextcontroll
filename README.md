@@ -76,12 +76,6 @@ Não é possivel cadatrar usuários com emails duplicados.
 [x] - Excluir a própria conta  
 [ ] - Paginação   
 [x] - Resposividade  
-##
-
-## Prints das Telas
-
-
-
 
 ***
 
