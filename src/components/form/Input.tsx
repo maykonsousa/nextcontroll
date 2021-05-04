@@ -1,14 +1,15 @@
-import {Input, FormControl, InputProps as NextInputProps} from "@chakra-ui/react"
-
+import {Input, FormControl, InputProps as NextInputProps, FormErrorMessage} from "@chakra-ui/react"
+import {FieldError} from 'react-hook-form'
 interface InputProps extends NextInputProps {
   name: string
   placeholder:string;
   type:string;
+  error?: FieldError;
 }
 
-export const NextInput = ({name, placeholder, type, ...props}:InputProps)=>{
+export const NextInput = ({name, error=null, placeholder, type, ...props}:InputProps)=>{
   return(
-    <FormControl>
+    <FormControl isInvalid={!!error}>
       <Input
         name={name}
         type={type}
@@ -18,6 +19,11 @@ export const NextInput = ({name, placeholder, type, ...props}:InputProps)=>{
         size="lg"
         {...props}
     />
+     {!!error && (
+       <FormErrorMessage>
+         {error.message}
+       </FormErrorMessage>
+     )}
     </FormControl>
     
     

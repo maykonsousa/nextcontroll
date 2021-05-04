@@ -1,22 +1,32 @@
-import Head from 'next/head'
-import Router from 'next/router'
-import Link from 'next/link'
-import {Flex, Button, Image, Stack} from '@chakra-ui/react'
-import { FormContainer } from '../components/form/FormContainer'
+import Head from 'next/head';
+import Router from 'next/router';
+import Link from 'next/link';
+import {Flex, Button, Image, Stack} from '@chakra-ui/react';
+import Swal from 'sweetalert2';
+import {useForm} from 'react-hook-form';
+import { useContext } from 'react';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup'
+
 import { NextInput  } from '../components/form/Input'
-import {useForm} from 'react-hook-form'
-import { useContext } from 'react'
 import { globalContext } from '../api/context/globalContext'
 import { isEmpty } from '../common/utils/functions/isEmpty'
-import Swal from 'sweetalert2'
 
 interface FormProps{
   email:string;
   password:string
 }
 
+const loginSchemaValidation = yup.object().shape({
+  email: yup.string().email('Formato de e-mail inválido').required('E-mail obrigatório'),
+  password: yup.string().min(6, 'Mínimo de 6 dígitos').required('Senha obrigatória')
+})
+
 export default function SignIn() {
-  const {handleSubmit, register, formState} = useForm()
+  const {handleSubmit, register, formState} = useForm({
+    resolver: yupResolver(loginSchemaValidation)
+  })
+  const {errors} = formState;
   const {users, setLogeduser } = useContext(globalContext)
  
 
@@ -67,15 +77,17 @@ export default function SignIn() {
       >
         <Stack spacing={4}>
           <NextInput 
-              type="email" 
+              type="text" 
               placeholder="E-mail" 
               name="email"
+              error={errors.email}
               {...register("email")}
               /> 
             <NextInput 
               type="password" 
               placeholder="Senha"
               name="password"
+              error={errors.password}
               {...register("password")}
               
               /> 

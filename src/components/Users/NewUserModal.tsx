@@ -16,11 +16,20 @@ import {
   Icon
   
 } from "@chakra-ui/react"
+import Swal from 'sweetalert2'
+import { FaUserPlus } from 'react-icons/fa'
+import * as yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
+
+const newUserValidation = yup.object().shape({
+  name: yup.string().required('Nome Obrigatório'),
+  profession: yup.string().required('Profissão obrigatória'),
+  email:yup.string().required('E-mail obrigatório').email('Informe um e-mail válido')
+})
+
 import {NextInput} from '../form/Input'
 import { api } from '../../api/api'
-import Swal from 'sweetalert2'
 import { globalContext } from '../../api/context/globalContext'
-import { FaUserPlus } from 'react-icons/fa'
 
 
 interface ValuesProps{
@@ -33,11 +42,19 @@ interface ValuesProps{
 }
 
 export const NewUserModal = ( ) => {
- const {handleSubmit, register } = useForm()
- const {refreshLista, setRefreshLista}= useContext(globalContext)
+ const {handleSubmit, register, formState } = useForm({
+   resolver: yupResolver(newUserValidation)
+ })
+ const {errors} = formState
+ const {refreshLista, setRefreshLista, users}= useContext(globalContext)
 const {onClose, onOpen, isOpen} = useDisclosure()
 
  const createNewUser=(values:ValuesProps)=>{
+   const userExists = users.filter(item=>item.email === values.email)
+   if(userExists.length>0 ){
+     onClose()
+     Swal.fire('Já existe um usuário com este e-mail cadastrado', '', 'error').then(()=>onOpen())
+   }else{
     api.post('users', {
       name:values.name,
       email:values.email,
@@ -48,6 +65,8 @@ const {onClose, onOpen, isOpen} = useDisclosure()
     .then(()=>onClose())
     .then(()=>Swal.fire('Usuário cadastrado com sucesso!','', 'success'))
     .then(()=>setRefreshLista(!refreshLista))
+   }
+    
   }
   return (
     <>
@@ -88,9 +107,9 @@ const {onClose, onOpen, isOpen} = useDisclosure()
     >
           <ModalBody>
           <Stack spacing="4">
-              <NextInput name="name" type="text" placeholder="Nome e Sobrenome"  {...register('name')} />
-              <NextInput name="profession" type="text" placeholder="Profissão"  {...register('profession')} />
-              <NextInput name="email" type="text" placeholder="email"  {...register('email')} />
+              <NextInput error={errors.name} name="name" type="text" placeholder="Nome e Sobrenome"  {...register('name')} />
+              <NextInput error={errors.profession} name="profession" type="text" placeholder="Profissão"  {...register('profession')} />
+              <NextInput error={errors.email} name="email" type="text" placeholder="email"  {...register('email')} />
           </Stack>
           </ModalBody>
           <ModalFooter>

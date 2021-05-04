@@ -16,11 +16,17 @@ import {
   Icon
   
 } from "@chakra-ui/react"
+import Swal from 'sweetalert2'
+import { FaUserEdit } from 'react-icons/fa'
+import * as yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
+
+
+
+
 import {NextInput} from '../form/Input'
 import { api } from '../../api/api'
-import Swal from 'sweetalert2'
 import { globalContext } from '../../api/context/globalContext'
-import { FaUserEdit, FaUserPlus } from 'react-icons/fa'
 
 
 interface ValuesProps{
@@ -28,17 +34,30 @@ interface ValuesProps{
   email:string;
   profession:string;
   newPassword:string;
+  consfirmNewPassword: string;
   aplication:"NextControll";
   
 }
 
+const profileSchemavalidation = yup.object().shape({
+  
+  confirmNewPassword:yup.string().oneOf([
+    null,
+    yup.ref('newPassword')
+  ], 'As senhas não conferem')
+})
+
 export const EditProfileModal = ( ) => {
- const {handleSubmit, register } = useForm()
- const {refreshLista, setRefreshLista, logedUser, setLogeduser}= useContext(globalContext)
+ const {handleSubmit, register, formState } = useForm({
+   resolver:yupResolver(profileSchemavalidation)
+ })
+ const {errors} = formState
+ const {refreshLista, setRefreshLista, logedUser}= useContext(globalContext)
 const {onClose, onOpen, isOpen} = useDisclosure()
-const {name, id, avatar, email, profession, password } =logedUser
+const {name, id, email, profession } =logedUser
 
  const createNewUser=(values:ValuesProps)=>{
+ 
     api.put(`users/${id}`, {
       name:values.name,
       email:values.email,
@@ -49,6 +68,7 @@ const {name, id, avatar, email, profession, password } =logedUser
     .then(()=>onClose())
     .then(()=>Swal.fire('Perfil Atualizado!','', 'success'))
     .then(()=>setRefreshLista(!refreshLista))
+  
     
   }
   return (
@@ -80,12 +100,11 @@ const {name, id, avatar, email, profession, password } =logedUser
     >
           <ModalBody>
           <Stack spacing="4">
-              <NextInput name="name" type="text" placeholder="Nome e Sobrenome" defaultValue={name}  {...register('name')} />
-              <NextInput name="profession" type="text" placeholder="Profissão" defaultValue={profession} {...register('profession')} />
-              <NextInput name="email" type="email" placeholder="E-mail" defaultValue={email}  {...register('email')} />
-              <NextInput name="oldPassword" type="password" placeholder="Senha Atual"  {...register('oldPassword')} />
-              <NextInput name="newPassword" type="password" placeholder="Nova Senha"  {...register('newPassword')} />
-              <NextInput name="confirmNewPassword" type="password" placeholder="Repita a Nova Senha"  {...register('confirmNewPassword')} />
+              <NextInput error={errors.name} name="name" type="text" placeholder="Nome e Sobrenome" defaultValue={name}  {...register('name')} />
+              <NextInput error={errors.profession} name="profession" type="text" placeholder="Profissão" defaultValue={profession} {...register('profession')} />
+              <NextInput error={errors.email} name="email" type="email" placeholder="E-mail" defaultValue={email}  {...register('email')} />
+              <NextInput error={errors.newPassword} name="newPassword" type="password" placeholder="Nova Senha"  {...register('newPassword')} />
+              <NextInput error={errors.confirmNewPassword} name="confirmNewPassword" type="password" placeholder="Repita a Nova Senha"  {...register('confirmNewPassword')} />
           </Stack>
           </ModalBody>
           <ModalFooter>
