@@ -101,7 +101,7 @@ const {name, id, email, profession } =logedUser
           <ModalHeader
             color="gray.50"
           >
-            Cadastrar Novo Usuário
+            Editar Perfil
           </ModalHeader>
           <ModalCloseButton />
           

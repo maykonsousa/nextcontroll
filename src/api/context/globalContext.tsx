@@ -27,7 +27,8 @@ interface InterfaceProps {
   setUsers?: React.Dispatch<SetStateAction<UserDataProps[]>>;
   refreshLista: Boolean;
   setRefreshLista:React.Dispatch<SetStateAction<Boolean>>
-
+  seachText:string; 
+  setSeachText:React.Dispatch<SetStateAction<string>>
 }
 
 interface PropsComponent {
@@ -41,15 +42,21 @@ export const GlobalProvider = ({children}:PropsComponent)=>{
   const [totalPaginas, setTotalpaginas] = useState(null) 
   const [refreshLista, setRefreshLista] = useState(false)
   const [userForEdit, setUserForEdit] = useState<UserDataProps>({} as UserDataProps)
+  const [seachText, setSeachText] = useState('')
 
   //carregar lista de usuários
   useEffect(()=>{
     api.get( "users").then(response=>{
       const myList = Array.isArray(response.data) && response.data.filter((item: UserDataProps)=>item.aplication==="NextControll")
+      if(!!seachText){
+      const listaFiltrada = Array.isArray(myList) && myList.filter((item: UserDataProps)=>item.name?.includes(seachText) || item.email?.includes(seachText))
+      setUsers(listaFiltrada)
+      return
+    }
       setUsers(myList)
     })
     
-  },[refreshLista])
+  },[refreshLista, seachText])
 
   
 
@@ -58,6 +65,8 @@ export const GlobalProvider = ({children}:PropsComponent)=>{
 
   return(
     <globalContext.Provider value={{ 
+      seachText, 
+      setSeachText,
       users, 
       setUsers, 
       refreshLista, 

@@ -1,10 +1,13 @@
 import { Input, Flex, Icon } from '@chakra-ui/react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { FaSearch } from 'react-icons/fa'
+import { globalContext } from '../../api/context/globalContext'
+import { debounce } from '../../common/utils/functions/debounce'
 
 
 
 export const SearchBar = () => {
+  const {seachText, setSeachText} = useContext(globalContext)
   return (
     <Flex
         as="label"
@@ -26,6 +29,8 @@ export const SearchBar = () => {
             mr="4"
             placeholder="Buscar Usuário"
             _placeholder={{color:"gray.400"}}
+            value={seachText}
+            onChange={e=>debounce(setSeachText(e.target.value), 1000)}
 
            />
            <Icon 
