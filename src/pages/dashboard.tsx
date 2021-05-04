@@ -25,12 +25,12 @@ import { EditModal } from '../components/Users/EditModal';
   return(
     <Flex direction="column" h="100vh">
     <Header/>
-    <Flex w="100%" my="10" maxWidth={1480} mx="auto"  >
+    <Flex w="100%" my="10" maxWidth={[360, 1480]} mx="auto"  >
       <Box
       flex="1"
       borderRadius="8"
       bg="gray.700"
-      p="8"
+      p={["4","8" ]}
       >
         <Flex mb="8" justify="space-between" align="center">
           <Heading size="lg" fontWeight="normal">Usuários</Heading>

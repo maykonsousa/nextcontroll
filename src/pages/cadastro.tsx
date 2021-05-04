@@ -70,7 +70,7 @@ const resgisterSchemaValidation = yup.object().shape({
     >
        <Image 
        src="images/logo.svg" 
-       width={360}
+       width={["300px", "360px"]}
        mb="8"
        /> 
       <Flex 

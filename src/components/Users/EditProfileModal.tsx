@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Router from 'next/router'
 import {useForm} from 'react-hook-form'
 import {
   Modal,
@@ -29,12 +30,13 @@ import { api } from '../../api/api'
 import { globalContext } from '../../api/context/globalContext'
 
 
+
 interface ValuesProps{
   name:string;
   email:string;
   profession:string;
   newPassword:string;
-  consfirmNewPassword: string;
+  confirmNewPassword: string;
   aplication:"NextControll";
   
 }
@@ -71,11 +73,29 @@ const {name, id, email, profession } =logedUser
   
     
   }
+
+  const deleteAcount = ()=>{
+    onClose()
+    Swal.fire({
+      title: `Deseja realmente excluir sua conta ?`,
+      showDenyButton: true,
+      confirmButtonText: `Confirmar`,
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+     
+      if (result.isConfirmed) {
+        api.delete(`users/${id}`).then(()=>Swal.fire('Conta Excluída!', '', 'success').then(()=>setRefreshLista(!refreshLista)).then(()=>Router.push('/')))
+        
+      } else if (result.isDenied) {
+        Swal.fire('Operação cancelada!', '', 'info')
+      }
+    })
+  }
   return (
     <>
     <Icon as={FaUserEdit} cursor="pointer" fontSize="20" onClick={onOpen} />
     
-    <Modal isOpen={isOpen} onClose={onClose}>
+  <Modal isOpen={isOpen} onClose={onClose} size="sm" >
         <ModalOverlay  />
         <ModalContent bg="gray.800">
           <ModalHeader
@@ -109,8 +129,9 @@ const {name, id, email, profession } =logedUser
           </ModalBody>
           <ModalFooter>
             <HStack>
-            <Button colorScheme="yellow"size="lg" type="submit">Salvar</Button>
-            <Button colorScheme="whiteAlpha" size="lg" type="button" onClick={onClose}>Fechar</Button>
+            <Button colorScheme="yellow"size="md" type="submit">Salvar</Button>
+            <Button colorScheme="orange" size="md" type="button" onClick={()=>deleteAcount()}>Excluir Conta</Button>
+            <Button colorScheme="whiteAlpha" size="md" type="button" onClick={onClose}>Fechar</Button>
             </HStack>
           </ModalFooter>
         </Flex>

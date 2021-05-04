@@ -10,7 +10,7 @@ import {
   Button,
   
   Icon,
-  useDisclosure,
+  
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import {FaEnvelope} from 'react-icons/fa'
@@ -41,12 +41,12 @@ export  const UserCard = ({name, email, avatar, profession, id}) => {
     })
   }
   return (
-    <Flex py={6} w="270px" 
+    <Flex py={6} w="270px"  mx={["auto","10"]}
    
     >
       <Box
         maxW={'270px'}
-        w={'full'}
+                w={'full'}
         bg='white'
         boxShadow={'2xl'}
         rounded={'md'}

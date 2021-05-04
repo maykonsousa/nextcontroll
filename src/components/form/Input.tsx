@@ -14,6 +14,7 @@ export const NextInput = ({name, error=null, placeholder, type, ...props}:InputP
         name={name}
         type={type}
         placeholder={placeholder}
+        fontSize={["sm", "lg"]}
         focusBorderColor="yellow.500"
         bgColor="gray.900"
         size="lg"

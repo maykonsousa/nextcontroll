@@ -58,7 +58,7 @@ export default function SignIn() {
     >
        <Image 
        src="images/logo.svg" 
-       width={360}
+       width={["300px", "360px"]}
        mb="8"
        /> 
         <Flex 

@@ -12,6 +12,7 @@ export const UsersList = () => {
           minChildWidth="320px"
           column="auto"
           alignItems=""
+          mx="auto"
          
         >
          

@@ -41,14 +41,16 @@
 A Api fornecida possui registros dinâmicos o que não permitiu manter um Login padrão, dessa forma, clique em registrar e faça o cadastro, logo será direcionado para a página de Login onde poderá acessar as informações com os dados cadastrados
 
 ## Sobre do cadastro
-Um novo cadastro pode ser criado tanto pelo prório usuário na tela de registro quanto por outro usuário administrador no Dashboard com algumas ressalvas.
+Um novo cadastro pode ser criado tanto pelo próprio usuário na tela de registro quanto por outro usuário administrador no Dashboard com algumas ressalvas.
 
 Usuário cadastrado direto na página de registro, pode informar os dados de nome, email, profissão e senha.
 
-Já um usuário cadastrado por um outro usuário logado, deverá informar Nome, email e profissão. Quanto a senha, será salva automaticamente com a sequência numérica `12345678` que poderá ser alterada posteriormente pelo próprio usuário, quando este se logar na aplicação.
+Já um usuário cadastrado por um outro usuário logado, deverá informar Nome, email e profissão. Quanto a senha, será salva automaticamente com a sequência numérica `12345678` que poderá ser alterada posteriormente pelo próprio usuário, quando este se logar na aplicação.  
+
+Não é possivel cadatrar usuários com emails duplicados.
 
 ## Edição de Usuários
-- Somente é permitido paraa usuários Logados
+- Somente é permitido para usuários Logados
 - Usuários só podem alterar Nome e Profissão de outros usuários. Não podem Alterar dados de Login como email e senha
 - Usuários logados podem alterar os próprios dados inclusive email e senha
 
@@ -59,16 +61,18 @@ Já um usuário cadastrado por um outro usuário logado, deverá informar Nome, 
 ## Atualização de Atividades
 
 [x] - Criação de telas  
-[ ] - Validação de formulários  
+[x] - Validação de formulários  
 [x] - Integração com a api  
 [x] - Login  
 [x] - Próprio Cadastro   
 [x] - Excluir usuários  
 [x] - Alterar Usuarios  
-[ ] - Editar Perfil  
-[ ] - Excluir conta  
-[ ] - Alterar Senha  
-[ ] - Excluir a própria conta  
+[x] - Editar Perfil  
+[x] - Excluir conta  
+[x] - Alterar Senha  
+[x] - Excluir a própria conta 
+[ ] - Paginação 
+[x] - Resposividade
 
 ## Prints das Telas
 
