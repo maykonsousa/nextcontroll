@@ -40,6 +40,9 @@
 ## Logando na aplicação:
 A Api fornecida possui registros dinâmicos o que não permitiu manter um Login padrão, dessa forma, clique em registrar e faça o cadastro, logo será direcionado para a página de Login onde poderá acessar as informações com os dados cadastrados
 
+## Listagem de usuários
+A lista de usuários é exibida em forma de card e exibe exclusivamente os usuários cadastrados meio da aplicação. Não exibindo portanto, usuários que porventura estejam sendo criados por outra aplicação
+
 ## Sobre do cadastro
 Um novo cadastro pode ser criado tanto pelo próprio usuário na tela de registro quanto por outro usuário administrador no Dashboard com algumas ressalvas.
 
@@ -70,9 +73,10 @@ Não é possivel cadatrar usuários com emails duplicados.
 [x] - Editar Perfil  
 [x] - Excluir conta  
 [x] - Alterar Senha  
-[x] - Excluir a própria conta 
-[ ] - Paginação 
-[x] - Resposividade
+[x] - Excluir a própria conta  
+[ ] - Paginação   
+[x] - Resposividade  
+##
 
 ## Prints das Telas
 
