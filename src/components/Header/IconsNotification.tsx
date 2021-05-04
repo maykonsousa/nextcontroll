@@ -18,8 +18,10 @@ const IconsNotification = () => {
     }).then((result) => {
        if (result.isConfirmed) {
         Swal.fire('Usuário Deslogado!', '', 'success').then(()=>setLogeduser({}))
+        .then(()=>Router.push('/'))
+        return
       } 
-    }).then(()=>Router.push('/'))
+    })
   }
 
   return (

@@ -8,6 +8,7 @@ import {useForm} from 'react-hook-form'
 import { api } from '../api/api'
 import { useContext } from 'react'
 import { globalContext } from '../api/context/globalContext'
+import Swal from 'sweetalert2'
 
 interface FormProps {
   name:string;
@@ -32,7 +33,10 @@ interface FormProps {
         profession:values.profession,
         password:values.password,
         aplication:"NextControll"
-       }).then(response=>setLogeduser(response.data)).then(()=>setRefreshLista(!refreshLista)).then(()=>Router.push('/'))
+       }).then(()=>Swal.fire(`Cadastro realizado com sucesso!`, 'Você será redirecionado(a) à pagina de Login', 'success'))
+
+       .then(()=>setRefreshLista(!refreshLista))
+       .then(()=>Router.push('/'))
      }
   return (
     <>

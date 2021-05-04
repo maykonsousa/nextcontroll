@@ -16,9 +16,9 @@ import { EditModal } from '../components/Users/EditModal';
 
 
      useEffect(()=>{
-        // if(isEmpty(logedUser)){
-        //   Router.push('/')
-        // }
+        if(isEmpty(logedUser)){
+          Router.push('/')
+        }
 
      },[logedUser])
    
