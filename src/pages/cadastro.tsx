@@ -1,12 +1,15 @@
 import Head from 'next/head'
 import Router from 'next/router'
 import Link from 'next/link'
-
-import {Flex, Button, Image, Text, Stack, Heading} from '@chakra-ui/react'
-import { NextInput  } from '../components/form/Input'
-import {useForm} from 'react-hook-form'
-import { api } from '../api/api'
+import Swal from 'sweetalert2'
 import { useContext } from 'react'
+import {useForm} from 'react-hook-form'
+import {Flex, Button, Image, Text, Stack, Heading} from '@chakra-ui/react'
+import * as yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
+
+import { NextInput  } from '../components/form/Input'
+import { api } from '../api/api'
 import { globalContext } from '../api/context/globalContext'
 
 interface FormProps {
@@ -19,20 +22,40 @@ interface FormProps {
 
 }
 
+const resgisterSchemaValidation = yup.object().shape({
+  name:yup.string().required('Nome e Sobrenome obrigatórios'),
+  email: yup.string().email('Digite um email válido').required('E-mail obrigatório'),
+  profession: yup.string().required('Profissão obrigatória'),
+  password:yup.string().min(6, 'Mínimo de 6 digitos').required('Senha obrigatória'),
+  confirmPassword:yup.string().oneOf([
+    null,
+    yup.ref('password')
+  ], 'As senhas não conferem')
+})
+
    const  Cadastro=()=> {
-     const {handleSubmit, register, formState} = useForm();
+     const {handleSubmit, register, formState} = useForm({
+       resolver: yupResolver(resgisterSchemaValidation)
+     });
      const {errors} = formState
-     const {setLogeduser, setRefreshLista, refreshLista} = useContext(globalContext)
+     const {users, setRefreshLista, refreshLista} = useContext(globalContext)
 
      const registerNewUser = (values:FormProps)=>{
-       
-       api.post('users', {
-        name:values.name,
-        email:values.email,
-        profession:values.profession,
-        password:values.password,
-        aplication:"NextControll"
-       }).then(response=>setLogeduser(response.data)).then(()=>setRefreshLista(!refreshLista)).then(()=>Router.push('/'))
+       const userExists = users.filter(item=>item.email ===values.email)
+      if(Array.isArray(userExists) &&userExists.length>0){
+        Swal.fire('Já existe um usuário com esse e-mail cadastrado', '', 'error')
+      }else{
+        api.post('users', {
+          name:values.name,
+          email:values.email,
+          profession:values.profession,
+          password:values.password,
+          aplication:"NextControll"
+         }).then(()=>Swal.fire(`Cadastro realizado com sucesso!`, 'Você será redirecionado(a) à pagina de Login', 'success'))
+  
+         .then(()=>setRefreshLista(!refreshLista))
+         .then(()=>Router.push('/'))
+      }
      }
   return (
     <>
@@ -66,11 +89,11 @@ interface FormProps {
     >
       <Heading fontSize="2xl" mb="4">faça o seu cadastro</Heading>
       <Stack spacing="4">
-        <NextInput type="text" placeholder="Nome e Sobrenome" name="name" {...register('name')} /> 
-        <NextInput type="text" placeholder="Profissão" name="profession" {...register('profession')} /> 
-        <NextInput type="email" placeholder="E-mail" name="email" {...register('email')}/> 
-        <NextInput type="password" placeholder="Senha"name="password" {...register('password')}/> 
-        <NextInput type="password" placeholder="Confirme sua senha"name="confirmPassword" {...register('confirmPassword')}/> 
+        <NextInput error={errors.name} type="text" placeholder="Nome e Sobrenome" name="name" {...register('name')} /> 
+        <NextInput error={errors.profession} type="text" placeholder="Profissão" name="profession" {...register('profession')} /> 
+        <NextInput error={errors.email} type="email" placeholder="E-mail" name="email" {...register('email')}/> 
+        <NextInput error={errors.password} type="password" placeholder="Senha"name="password" {...register('password')}/> 
+        <NextInput error={errors.confirmPassword} type="password" placeholder="Confirme sua senha"name="confirmPassword" {...register('confirmPassword')}/> 
         <Button colorScheme="yellow"size="lg"type="submit">Entrar</Button>
 
       </Stack>
